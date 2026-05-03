@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from "react";
 
 const stats = [
   { num: 150, suffix: "+", label: "Projects Launched", color: "#c8e87a" },
-  { num: 200, prefix: "$", suffix: "M+", label: "Revenue Generated", color: "#a78bfa" },
+  { num: 20, prefix: "$", suffix: "M+", label: "Revenue Generated", color: "#a78bfa" },
   { num: 8, suffix: "", label: "Years of Craft", color: "#f5d000" },
   { num: 98, suffix: "%", label: "Client Retention", color: "#ff9e97" },
 ];
@@ -198,7 +198,7 @@ export default function About() {
           }}
         >
           We partner with ambitious founders and growth-stage companies who know
-          their work matters — they just need the world to see it.
+          their work matters, they just need the world to see it.
         </motion.p>
 
         {/* Stat cards */}
@@ -293,7 +293,7 @@ export default function About() {
             lineHeight: 1.5, margin: 0,
             fontStyle: "italic",
           }}>
-            "Great brands aren't built overnight — they're{" "}
+            "Great brands aren't built overnight, they're{" "}
             <span style={{ color: "#c8e87a" }}>engineered with intent</span>{" "}
             and grown with relentless focus."
           </p>
@@ -303,7 +303,7 @@ export default function About() {
             letterSpacing: 3, textTransform: "uppercase",
             marginTop: 20, marginBottom: 0,
           }}>
-            — Virello Studio Founding Principle
+            Virello Studio Founding Principle
           </p>
         </motion.div>
       </section>
