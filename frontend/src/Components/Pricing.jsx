@@ -71,7 +71,6 @@ export default function Pricing() {
           transition: opacity 0.35s;
         }
         .pricing-card:hover::before { opacity: 0.16; }
-
         .pricing-card.featured::after {
           content: '';
           position: absolute;
@@ -95,7 +94,7 @@ export default function Pricing() {
 
         .pricing-cta {
           margin-top: 36px;
-          font-family: "'DM Sans', sans-serif";
+          font-family: 'DM Sans', sans-serif;
           font-size: 14px;
           font-weight: 600;
           border-radius: 12px;
@@ -109,7 +108,7 @@ export default function Pricing() {
 
         .badge-popular {
           display: inline-block;
-          font-family: "'DM Sans', sans-serif";
+          font-family: 'DM Sans', sans-serif;
           font-size: 10px;
           font-weight: 600;
           letter-spacing: 2.5px;
@@ -119,13 +118,58 @@ export default function Pricing() {
           margin-bottom: 16px;
           align-self: flex-start;
         }
+
+        .pricing-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+          text-align: left;
+        }
+
+        .pricing-section {
+          padding: 96px 48px;
+        }
+
+        @media (max-width: 960px) {
+          .pricing-grid {
+            grid-template-columns: 1fr;
+            max-width: 520px;
+            margin: 0 auto;
+          }
+          .pricing-section {
+            padding: 80px 32px;
+          }
+          /* Disable lift on mobile to avoid layout shift */
+          .pricing-card:hover {
+            transform: none;
+            box-shadow: none;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .pricing-section {
+            padding: 64px 20px;
+          }
+          .pricing-card {
+            padding: 36px 28px;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .pricing-section {
+            padding: 56px 16px;
+          }
+          .pricing-card {
+            padding: 28px 20px;
+          }
+        }
       `}</style>
 
       <section
         id="pricing"
+        className="pricing-section"
         style={{
           background: "#fdf6ee",
-          padding: "96px 48px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -134,7 +178,7 @@ export default function Pricing() {
           overflow: "hidden",
         }}
       >
-        {/* Background orbs */}
+        {/* Background orb */}
         <div style={{
           position: "absolute", borderRadius: "50%",
           width: 500, height: 500,
@@ -145,7 +189,6 @@ export default function Pricing() {
 
         <div style={{ maxWidth: 1100, width: "100%" }}>
 
-          {/* Label */}
           <motion.p
             variants={fadeUp} initial="hidden" whileInView="visible"
             viewport={{ once: true }} custom={0}
@@ -158,16 +201,15 @@ export default function Pricing() {
             TRANSPARENT
           </motion.p>
 
-          {/* Headline */}
           <motion.h2
             variants={fadeUp} initial="hidden" whileInView="visible"
             viewport={{ once: true }} custom={1}
             style={{
               fontFamily: '"DM Serif Display", serif',
-              fontSize: "clamp(36px, 4vw, 58px)",
+              fontSize: "clamp(32px, 4vw, 58px)",
               color: "#000", fontWeight: 400,
-              marginBottom: 72, maxWidth: 600,
-              marginLeft: "auto", marginRight: "auto",
+              marginBottom: 56,
+              maxWidth: 600, marginLeft: "auto", marginRight: "auto",
               lineHeight: 1.08,
             }}
           >
@@ -175,8 +217,7 @@ export default function Pricing() {
             <em style={{ fontStyle: "italic", color: "#000" }}>pricing.</em>
           </motion.h2>
 
-          {/* Cards grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20, textAlign: "left" }}>
+          <div className="pricing-grid">
             {plans.map((p, i) => (
               <motion.div
                 key={p.name}
@@ -185,12 +226,10 @@ export default function Pricing() {
                 className={`pricing-card${p.featured ? " featured" : ""}`}
                 style={{
                   "--glow": p.glowColor,
-                  // ✅ All cards now use the same light background
                   background: "rgba(0,0,0,0.05)",
                   border: "1px solid rgba(0,0,0,0.09)",
                 }}
               >
-                {/* Top line accent */}
                 <div style={{
                   position: "absolute", top: 0, left: "15%", right: "15%", height: 2,
                   background: p.accentColor, borderRadius: "0 0 4px 4px", opacity: 0.75,
@@ -201,7 +240,6 @@ export default function Pricing() {
                     className="badge-popular"
                     style={{
                       background: `${p.accentColor}22`,
-                      // ✅ Dark green text instead of bright accent for readability on light bg
                       color: "#4a7a00",
                       border: `1px solid ${p.accentColor}44`,
                     }}
@@ -210,11 +248,9 @@ export default function Pricing() {
                   </span>
                 )}
 
-                {/* Tier name */}
                 <div style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 11, letterSpacing: 3,
-                  // ✅ All cards use the same muted color (no more bright green accent on Growth)
                   color: "rgba(0,0,0,0.45)",
                   textTransform: "uppercase",
                   marginBottom: p.featured ? 12 : 16,
@@ -222,37 +258,28 @@ export default function Pricing() {
                   {p.name}
                 </div>
 
-                {/* Price */}
                 <div style={{
                   fontFamily: '"DM Serif Display", serif',
-                  fontSize: 52, fontWeight: 400,
-                  // ✅ All cards use dark text
-                  color: "#000",
-                  lineHeight: 1,
+                  fontSize: "clamp(40px, 5vw, 52px)",
+                  fontWeight: 400, color: "#000", lineHeight: 1,
                 }}>
                   {p.price}
                   {p.period && (
-                    <span style={{
-                      fontSize: 15, fontFamily: "'DM Sans', sans-serif",
-                      opacity: 0.5, marginLeft: 6,
-                    }}>
+                    <span style={{ fontSize: 15, fontFamily: "'DM Sans', sans-serif", opacity: 0.5, marginLeft: 6 }}>
                       {p.period}
                     </span>
                   )}
                 </div>
 
-                {/* Description */}
                 <p style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 14, lineHeight: 1.75,
-                  // ✅ All cards use the same muted dark text
                   color: "rgba(0,0,0,0.5)",
                   margin: "16px 0 28px",
                 }}>
                   {p.desc}
                 </p>
 
-                {/* Separator */}
                 <div style={{
                   height: 1, marginBottom: 24,
                   background: p.featured
@@ -260,7 +287,6 @@ export default function Pricing() {
                     : "rgba(0,0,0,0.08)",
                 }} />
 
-                {/* Features */}
                 <ul style={{
                   listStyle: "none", padding: 0,
                   margin: "0 0 auto",
@@ -271,26 +297,19 @@ export default function Pricing() {
                       key={f}
                       style={{
                         fontFamily: "'DM Sans', sans-serif",
-                        fontSize: 14,
-                        // ✅ All cards use the same dark feature text
-                        color: "rgba(0,0,0,0.68)",
+                        fontSize: 14, color: "rgba(0,0,0,0.68)",
                         display: "flex", alignItems: "center", gap: 12,
                       }}
                     >
-                      <span
-                        className="check-dot"
-                        style={{ background: p.accentColor }}
-                      />
+                      <span className="check-dot" style={{ background: p.accentColor }} />
                       {f}
                     </li>
                   ))}
                 </ul>
 
-                {/* CTA Button */}
                 <button
                   className="pricing-cta"
                   style={{
-                    // ✅ All cards now use transparent button with border
                     background: "transparent",
                     color: "#000",
                     border: "1px solid rgba(0,0,0,0.18)",
@@ -303,7 +322,6 @@ export default function Pricing() {
             ))}
           </div>
 
-          {/* Bottom footnote */}
           <motion.p
             variants={fadeUp} initial="hidden" whileInView="visible"
             viewport={{ once: true }} custom={4}

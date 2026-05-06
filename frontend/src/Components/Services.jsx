@@ -22,7 +22,7 @@ function ServiceCard({ s }) {
           observer.disconnect();
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -59,8 +59,8 @@ export default function Services() {
           opacity: 0;
         }
 
-        .srv-from-left { transform: translateX(-70px); }
-        .srv-from-right { transform: translateX(70px); }
+        .srv-from-left { transform: translateX(-50px); }
+        .srv-from-right { transform: translateX(50px); }
 
         .srv-card.srv-visible {
           opacity: 1;
@@ -77,10 +77,7 @@ export default function Services() {
           object-fit: cover;
           transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
         }
-
-        .srv-card:hover img {
-          transform: scale(1.05);
-        }
+        .srv-card:hover img { transform: scale(1.05); }
 
         .srv-overlay {
           position: absolute;
@@ -99,46 +96,82 @@ export default function Services() {
         }
 
         .srv-num {
-          font-family:'DM Sans',sans-serif;
-          font-size:10px;
-          letter-spacing:3px;
-          color:#c8e87a;
-          margin-bottom:8px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 10px;
+          letter-spacing: 3px;
+          color: #c8e87a;
+          margin-bottom: 8px;
         }
 
         .srv-title {
-          font-family:'DM Serif Display',serif;
-          font-size:21px;
-          color:#fff;
-          font-weight:400;
-          margin-bottom:8px;
+          font-family: 'DM Serif Display', serif;
+          font-size: 21px;
+          color: #fff;
+          font-weight: 400;
+          margin-bottom: 8px;
         }
 
         .srv-desc {
-          font-family:'DM Sans',sans-serif;
-          font-size:12px;
-          color:rgba(255,255,255,0.72);
-          line-height:1.75;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 12px;
+          color: rgba(255,255,255,0.72);
+          line-height: 1.75;
         }
 
         .srv-arrow {
-          margin-top:14px;
-          font-size:16px;
-          color:#c8e87a;
-          display:inline-block;
-          transition:transform 0.4s ease;
+          margin-top: 14px;
+          font-size: 16px;
+          color: #c8e87a;
+          display: inline-block;
+          transition: transform 0.4s ease;
+        }
+        .srv-card:hover .srv-arrow { transform: translate(4px, -4px); }
+
+        /* Services grid responsive */
+        .srv-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 14px;
         }
 
-        .srv-card:hover .srv-arrow {
-          transform: translate(4px,-4px);
+        .srv-section {
+          padding: 72px 48px;
+        }
+
+        @media (max-width: 900px) {
+          .srv-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .srv-section {
+            padding: 64px 32px;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .srv-grid {
+            grid-template-columns: 1fr;
+          }
+          .srv-section {
+            padding: 56px 20px;
+          }
+          .srv-card {
+            height: 260px;
+          }
+          .srv-from-left,
+          .srv-from-right {
+            transform: translateY(30px);
+          }
+          .srv-card.srv-visible {
+            transform: translateY(0);
+          }
         }
       `}</style>
 
       <section
         id="services"
+        className="srv-section"
         style={{
           background: "#fdf6ee",
-          padding: "72px 48px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -146,14 +179,14 @@ export default function Services() {
       >
         <div style={{ maxWidth: 1100, width: "100%" }}>
 
-          {/* MATCHED LABEL */}
           <motion.p
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: "clamp(18px, 2vw, 24px)",
+              fontSize: "clamp(11px, 2vw, 13px)",
               letterSpacing: 4,
               color: "#000000",
               fontWeight: "bold",
@@ -167,18 +200,18 @@ export default function Services() {
 
           <h2
             style={{
-              fontFamily: '"DM Serif Display",serif',
-              fontSize: "clamp(36px,4vw,56px)",
+              fontFamily: '"DM Serif Display", serif',
+              fontSize: "clamp(32px, 4vw, 56px)",
               fontWeight: 400,
               textAlign: "center",
-              marginBottom: 56,
+              marginBottom: 48,
               color: "#000000",
             }}
           >
             Services built for <em style={{ color: "#000000" }}>impact.</em>
           </h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14 }}>
+          <div className="srv-grid">
             {services.map((s) => (
               <ServiceCard key={s.num} s={s} />
             ))}

@@ -82,25 +82,6 @@ export default function About() {
         }
         .about-stat-card:hover::before { opacity: 0.15; }
 
-        .pillar-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: rgba(0,0,0,0.06);
-          border: 1px solid rgba(0,0,0,0.1);
-          borderRadius: 999px;
-          padding: 8px 18px;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 13px;
-          color: rgba(0,0,0,0.65);
-          transition: background 0.2s, border-color 0.2s;
-        }
-        .pillar-pill:hover {
-          background: #c8e87a;
-          border-color: #c8e87a;
-          color: #000;
-        }
-
         .marquee-wrap {
           overflow: hidden;
           width: 100%;
@@ -124,10 +105,47 @@ export default function About() {
           pointer-events: none;
           filter: blur(80px);
         }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          .about-section {
+            padding: 80px 32px !important;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px !important;
+          }
+          .about-section {
+            padding: 64px 20px !important;
+          }
+          .about-stat-card {
+            padding: 24px 16px 20px;
+          }
+          .quote-block {
+            padding: 28px 24px !important;
+            border-radius: 18px !important;
+          }
+          .about-bg-orb {
+            display: none;
+          }
+        }
+
+        @media (max-width: 400px) {
+          .stats-grid {
+            grid-template-columns: 1fr 1fr !important;
+          }
+        }
       `}</style>
 
       <section
         id="about"
+        className="about-section"
         style={{
           background: "#fdf6ee",
           padding: "96px 48px",
@@ -141,7 +159,7 @@ export default function About() {
           overflow: "hidden",
         }}
       >
-        {/* Subtle background orbs */}
+        {/* Background orbs */}
         <div className="about-bg-orb" style={{ width: 420, height: 420, background: "#c8e87a", opacity: 0.07, top: -120, right: -100 }} />
         <div className="about-bg-orb" style={{ width: 320, height: 320, background: "#a78bfa", opacity: 0.06, bottom: 0, left: -80 }} />
 
@@ -162,7 +180,7 @@ export default function About() {
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
           style={{
             fontFamily: '"DM Serif Display", serif',
-            fontSize: "clamp(40px, 5vw, 68px)",
+            fontSize: "clamp(36px, 5vw, 68px)",
             color: "#000", fontWeight: 400,
             lineHeight: 1.05, margin: "0 0 8px", maxWidth: 720,
           }}
@@ -181,9 +199,9 @@ export default function About() {
         <motion.p
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
           style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 16,
+            fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(14px, 2vw, 16px)",
             color: "rgba(0,0,0,0.52)", lineHeight: 1.85,
-            margin: "28px auto 12px", maxWidth: 560,
+            margin: "28px auto 12px", maxWidth: 560, padding: "0 8px",
           }}
         >
           Virello Studio is a digital agency obsessed with brand storytelling,
@@ -192,22 +210,23 @@ export default function About() {
         <motion.p
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}
           style={{
-            fontFamily: "'DM Sans', sans-serif", fontSize: 16,
+            fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(14px, 2vw, 16px)",
             color: "rgba(0,0,0,0.52)", lineHeight: 1.85,
-            maxWidth: 560, marginBottom: 52,
+            maxWidth: 560, marginBottom: 48, padding: "0 8px",
           }}
         >
           We partner with ambitious founders and growth-stage companies who know
-          their work matters, they just need the world to see it.
+          their work matters — they just need the world to see it.
         </motion.p>
 
         {/* Stat cards */}
         <div
           ref={statsRef}
+          className="stats-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 16, width: "100%", maxWidth: 960, marginBottom: 56,
+            gap: 16, width: "100%", maxWidth: 960, marginBottom: 48,
           }}
         >
           {stats.map(({ num, prefix, suffix, label, color }, i) => (
@@ -218,23 +237,20 @@ export default function About() {
               className="about-stat-card"
               style={{ "--glow-color": color }}
             >
-              {/* Colored top line accent */}
               <div style={{
                 position: "absolute", top: 0, left: "20%", right: "20%", height: 2,
                 background: color, borderRadius: "0 0 4px 4px", opacity: 0.7,
               }} />
-
               <div style={{
                 fontFamily: '"DM Serif Display", serif',
-                fontSize: "clamp(36px, 3.5vw, 48px)",
-                fontWeight: 400, lineHeight: 1,
-                marginBottom: 10,
+                fontSize: "clamp(30px, 3.5vw, 48px)",
+                fontWeight: 400, lineHeight: 1, marginBottom: 10,
               }}>
                 <CountUp target={num} prefix={prefix} suffix={suffix} color={color} inView={statsInView} />
               </div>
               <div style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: 12, color: "rgba(255,255,255,0.42)",
+                fontSize: 11, color: "rgba(255,255,255,0.42)",
                 letterSpacing: 0.5, textTransform: "uppercase",
               }}>
                 {label}
@@ -253,7 +269,6 @@ export default function About() {
               {[...pillars, ...pillars].map(({ icon, text }, i) => (
                 <span
                   key={i}
-                  className="pillar-pill"
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 8,
                     background: "rgba(0,0,0,0.05)",
@@ -272,11 +287,12 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Divider quote */}
+        {/* Quote block */}
         <motion.div
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5}
+          className="quote-block"
           style={{
-            marginTop: 72, padding: "40px 48px",
+            marginTop: 64, padding: "40px 48px",
             background: "#141014",
             borderRadius: 24, border: "1px solid rgba(255,255,255,0.07)",
             maxWidth: 760, width: "100%", position: "relative", overflow: "hidden",
@@ -288,18 +304,17 @@ export default function About() {
           }} />
           <p style={{
             fontFamily: '"DM Serif Display", serif',
-            fontSize: "clamp(22px, 2.5vw, 30px)",
+            fontSize: "clamp(18px, 2.5vw, 30px)",
             color: "#f5f0ea", fontWeight: 400,
-            lineHeight: 1.5, margin: 0,
-            fontStyle: "italic",
+            lineHeight: 1.5, margin: 0, fontStyle: "italic",
           }}>
-            "Great brands aren't built overnight, they're{" "}
+            "Great brands aren't built overnight — they're{" "}
             <span style={{ color: "#c8e87a" }}>engineered with intent</span>{" "}
             and grown with relentless focus."
           </p>
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: 12, color: "rgba(255,255,255,0.3)",
+            fontSize: 11, color: "rgba(255,255,255,0.3)",
             letterSpacing: 3, textTransform: "uppercase",
             marginTop: 20, marginBottom: 0,
           }}>

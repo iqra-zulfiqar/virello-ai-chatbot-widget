@@ -19,9 +19,6 @@ const Home = () => {
       <Pricing />
       <Contact />
       <Footer />
-
-      {/* Chatbot added to landing page */}
-      <Chatbot />
     </>
   );
 };

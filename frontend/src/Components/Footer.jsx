@@ -20,7 +20,7 @@ const ArrowUpRight = () => (
 );
 
 const Moth = () => (
-  <svg width="72" height="56" viewBox="0 0 52 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="72" height="56" viewBox="0 0 52 40" fill="none">
     <ellipse cx="26" cy="20" rx="2.5" ry="8" fill="#c8f56a" opacity="0.9" />
     <ellipse cx="14" cy="17" rx="10" ry="6" fill="url(#wingL)" opacity="0.85" transform="rotate(-10 14 17)" />
     <ellipse cx="38" cy="17" rx="10" ry="6" fill="url(#wingR)" opacity="0.85" transform="rotate(10 38 17)" />
@@ -29,19 +29,19 @@ const Moth = () => (
     <line x1="26" y1="12" x2="20" y2="5" stroke="#c8f56a" strokeWidth="1" strokeLinecap="round" />
     <line x1="26" y1="12" x2="32" y2="5" stroke="#c8f56a" strokeWidth="1" strokeLinecap="round" />
     <defs>
-      <linearGradient id="wingL" x1="4" y1="12" x2="24" y2="23" gradientUnits="userSpaceOnUse">
+      <linearGradient id="wingL" x1="4" y1="12" x2="24" y2="23">
         <stop stopColor="#c8f56a" />
         <stop offset="1" stopColor="#4dd9c0" />
       </linearGradient>
-      <linearGradient id="wingR" x1="28" y1="12" x2="48" y2="23" gradientUnits="userSpaceOnUse">
+      <linearGradient id="wingR" x1="28" y1="12" x2="48" y2="23">
         <stop stopColor="#4dd9c0" />
         <stop offset="1" stopColor="#c8f56a" />
       </linearGradient>
-      <linearGradient id="wingLB" x1="6" y1="22" x2="21" y2="30" gradientUnits="userSpaceOnUse">
+      <linearGradient id="wingLB" x1="6" y1="22" x2="21" y2="30">
         <stop stopColor="#9be8d8" />
         <stop offset="1" stopColor="#c8f56a" />
       </linearGradient>
-      <linearGradient id="wingRB" x1="31" y1="22" x2="46" y2="30" gradientUnits="userSpaceOnUse">
+      <linearGradient id="wingRB" x1="31" y1="22" x2="46" y2="30">
         <stop stopColor="#c8f56a" />
         <stop offset="1" stopColor="#9be8d8" />
       </linearGradient>
@@ -76,25 +76,11 @@ export default function Footer() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
 
-        .vs-footer *, .vs-footer *::before, .vs-footer *::after {
-          box-sizing: border-box;
-        }
-
         .vs-footer {
           background: #0c0c0c;
-          color: #ffffff;
+          color: #fff;
           font-family: 'Syne', sans-serif;
           padding: 60px 80px 0;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .vs-footer::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, #2a2a2a, transparent);
         }
 
         .vs-footer-top {
@@ -103,89 +89,67 @@ export default function Footer() {
           gap: 32px;
           padding-bottom: 52px;
           border-bottom: 1px solid #1c1c1c;
-          align-items: start;
         }
 
         .vs-contact-email {
           font-size: 18px;
           font-weight: 700;
-          color: #ffffff;
-          letter-spacing: -0.02em;
           margin-bottom: 12px;
-          display: block;
           text-decoration: none;
-          transition: color 0.2s;
-          line-height: 1.2;
+          color: #fff;
         }
 
-        .vs-contact-email:hover { color: #c8f56a; }
-
-        .vs-city {
-          font-size: 13px;
-          color: #ffffff;
-          margin: 0 0 22px;
-        }
+        .vs-city { font-size: 13px; margin-bottom: 20px; }
 
         .vs-copy {
-          font-size: 11.5px;
-          color: #ffffff;
+          font-size: 12px;
           opacity: 0.8;
-          line-height: 1.75;
-          margin: 0;
+          line-height: 1.6;
         }
 
         .vs-nav-label {
           font-size: 10px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #ffffff;
           opacity: 0.7;
-          margin: 0 0 20px;
-          font-weight: 700;
+          margin-bottom: 20px;
         }
 
         .vs-nav-list {
           list-style: none;
           padding: 0;
-          margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 10px;
         }
 
         .vs-nav-link {
-          color: #ffffff;
+          color: #fff;
           text-decoration: none;
           font-size: 15px;
-          font-weight: 500;
           display: inline-flex;
           align-items: center;
-          transition: color 0.2s;
-          cursor: pointer;
-          line-height: 1.3;
         }
 
         .vs-nav-link:hover { color: #c8f56a; }
 
+        /* CTA */
         .vs-footer-headline-row {
           display: flex;
-          align-items: flex-end;
           justify-content: space-between;
-          padding: 44px 0 52px;
-          overflow: visible;
+          align-items: flex-end;
+          padding: 80px 0 60px;
+          gap: 20px;
         }
 
         .vs-headline {
-          font-size: clamp(26px, 3vw, 46px);
-          font-weight: 800;
-          line-height: 1.2;
-          letter-spacing: -0.03em;
-          color: #c8f56a;
+          font-size: 80px;
+          line-height: 1.1;
+          letter-spacing: -1px;
+          color: #b6f36b;
           opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-                      transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-          display: block;
+          transform: translateY(30px);
+          transition: all 0.8s ease;
         }
 
         .vs-headline.visible {
@@ -195,60 +159,111 @@ export default function Footer() {
 
         .vs-headline em {
           font-style: italic;
-          font-weight: 700;
-          color: #4dd9c0;
-        }
-
-        .vs-headline-second {
-          transition-delay: 0.1s;
+          font-family: Georgia, serif;
         }
 
         .vs-moth-wrap {
-          flex-shrink: 0;
-          padding-bottom: 8px;
           opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 0.8s 0.35s, transform 0.8s 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          transform: translateY(20px);
+          transition: all 0.8s ease 0.3s;
         }
 
         .vs-moth-wrap.visible {
           opacity: 1;
           transform: translateY(0);
-          animation: mothFloat 4s ease-in-out infinite 1.1s;
+          animation: float 4s ease-in-out infinite;
         }
 
-        @keyframes mothFloat {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-9px); }
+        @keyframes float {
+          0%,100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
         }
 
-        @media (max-width: 900px) {
-          .vs-footer { padding: 48px 36px 0; }
+        /* TABLET */
+        @media (max-width: 1024px) {
+          .vs-footer {
+            padding: 50px 40px 0;
+          }
+
+          .vs-footer-top {
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+
+          .vs-headline {
+            font-size: 60px;
+          }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+          .vs-footer {
+            padding: 40px 24px 0;
+          }
+
           .vs-footer-top {
             grid-template-columns: 1fr 1fr;
-            gap: 32px;
+            gap: 28px;
           }
-          .vs-contact-block { grid-column: 1 / -1; }
+
+          .vs-footer-headline-row {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 60px 0 40px;
+          }
+
+          .vs-headline {
+            font-size: 42px;
+          }
+
+          /* ✅ FIXED BUTTERFLY POSITION */
+          .vs-moth-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+          }
         }
 
-        @media (max-width: 560px) {
-          .vs-footer { padding: 36px 20px 0; }
-          .vs-footer-top { grid-template-columns: 1fr; }
-          .vs-headline { font-size: 26px; }
+        /* SMALL MOBILE */
+        @media (max-width: 480px) {
+          .vs-footer-top {
+            grid-template-columns: 1fr;
+          }
+
+          .vs-headline {
+            font-size: 34px;
+            line-height: 1.2;
+          }
+
+          .vs-nav-link {
+            font-size: 14px;
+          }
+        }
+
+        /* VERY SMALL */
+        @media (max-width: 360px) {
+          .vs-headline {
+            font-size: 30px;
+          }
+
+          .vs-footer {
+            padding: 30px 18px 0;
+          }
         }
       `}</style>
 
       <footer className="vs-footer">
+
         <div className="vs-footer-top">
 
-          <div className="vs-contact-block">
-            <a href="mailto:info@aloa.agency" className="vs-contact-email">
+          <div>
+            <a href="mailto:info@Virello.Studio" className="vs-contact-email">
               info@Virello.Studio
             </a>
             <p className="vs-city">United Kingdom • Remote Studio</p>
             <p className="vs-copy">
               © Virello.Studio<br />
-              Virello.Studio is a creative studio<br />
+              Creative Development Studio<br />
               All rights reserved.
             </p>
           </div>
@@ -278,18 +293,19 @@ export default function Footer() {
 
         <div className="vs-footer-headline-row" ref={headlineRef}>
           <div>
-            <span className={`vs-headline ${visible ? "visible" : ""}`}>
-              Let's build <em>brilliant</em>
-            </span>
-            <span className={`vs-headline vs-headline-second ${visible ? "visible" : ""}`}>
+            <div className={`vs-headline ${visible ? "visible" : ""}`}>
+              Let’s build <em>brilliant</em>
+            </div>
+            <div className={`vs-headline ${visible ? "visible" : ""}`}>
               together.
-            </span>
+            </div>
           </div>
 
           <div className={`vs-moth-wrap ${visible ? "visible" : ""}`}>
             <Moth />
           </div>
         </div>
+
       </footer>
     </>
   );
