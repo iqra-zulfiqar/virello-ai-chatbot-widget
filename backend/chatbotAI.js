@@ -1,12 +1,16 @@
 import express from "express";
 import fetch from "node-fetch";
+import path from "path";
+import { fileURLToPath } from "url";
+import dotenv from "dotenv";
 import Lead from "./models/Lead.js";
 
-const router = express.Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// ─── GEMINI CONFIG ────────────────────────────────────────────────────────────
-const GEMINI_KEY = process.env.GEMINI_API_KEY || "AIzaSyC08w3Lnj9GQu57pTE2-vTzH-bjjBqvJNE";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_KEY}`;
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
+const router = express.Router();
 
 // ─── VIRELLO SYSTEM PROMPT ────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `
@@ -115,10 +119,6 @@ function toGeminiContents(messages) {
   }));
 }
 
-/**
- * Extracts [LEAD_DATA:{...}] JSON from AI response text.
- * Returns { leadData, cleanText }
- */
 function extractLeadData(text) {
   const match = text.match(/\[LEAD_DATA:(\{.*?\})\]/s);
   if (!match) return { leadData: null, cleanText: text };
@@ -131,15 +131,11 @@ function extractLeadData(text) {
   }
 }
 
-// ─── IN-MEMORY SESSION LEAD STORE (upgrade to DB if needed) ──────────────────
-const sessionLeads = new Map(); // sessionId → { name, email, phone }
+// ─── IN-MEMORY SESSION LEAD STORE ────────────────────────────────────────────
+const sessionLeads = new Map();
 
 // ─── ROUTES ──────────────────────────────────────────────────────────────────
 
-/**
- * POST /api/chat
- * Main chat endpoint — calls Gemini with Virello system prompt
- */
 router.post("/chat", async (req, res) => {
   try {
     const { messages, sessionId } = req.body;
@@ -147,6 +143,9 @@ router.post("/chat", async (req, res) => {
     if (!messages || !Array.isArray(messages)) {
       return res.status(400).json({ error: "messages array is required" });
     }
+
+    const GEMINI_KEY = process.env.GEMINI_API_KEY;
+    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${GEMINI_KEY}`;
 
     const payload = {
       systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
@@ -179,16 +178,13 @@ router.post("/chat", async (req, res) => {
       data.candidates?.[0]?.content?.parts?.[0]?.text ||
       "I'm sorry, I couldn't process that.";
 
-    // ── Parse lead data if present
     const { leadData, cleanText } = extractLeadData(rawText);
 
-    // ── Auto-save lead when AI has collected name + email
     if (leadData?.name && leadData?.email) {
       const existing = sessionLeads.get(sessionId) || {};
       const merged = { ...existing, ...leadData };
       sessionLeads.set(sessionId, merged);
 
-      // Upsert into MongoDB
       try {
         await Lead.findOneAndUpdate(
           { email: merged.email.toLowerCase() },
@@ -223,10 +219,6 @@ router.post("/chat", async (req, res) => {
   }
 });
 
-/**
- * POST /api/leads
- * Manually submit lead data (e.g. from a contact form)
- */
 router.post("/leads", async (req, res) => {
   try {
     const { name, email, phone, sessionId, source, projectDetails, budget } = req.body;
@@ -257,10 +249,6 @@ router.post("/leads", async (req, res) => {
   }
 });
 
-/**
- * POST /api/handover
- * Trigger human handover — returns WhatsApp link
- */
 router.post("/handover", async (req, res) => {
   try {
     const { sessionId } = req.body;
@@ -275,10 +263,6 @@ router.post("/handover", async (req, res) => {
   }
 });
 
-/**
- * GET /api/leads
- * Fetch all leads (admin use)
- */
 router.get("/leads", async (req, res) => {
   try {
     const leads = await Lead.find().sort({ createdAt: -1 }).limit(200);
